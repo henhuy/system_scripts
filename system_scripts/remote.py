@@ -10,6 +10,7 @@ LAPTOP_RESOLUTION = "1200x800"
 DESKTOP_RESOLUTION = "1800x1000"
 
 app = typer.Typer()
+typer.echo("remote - Simple tool to connect to remote devices\n")
 
 
 @dataclass
