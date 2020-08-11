@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "system scripts"
+name = "systemscripts"
 version = "0.2.0"
 description = "Quick system scripts"
 authors = ["hendrik.huyskens"]
