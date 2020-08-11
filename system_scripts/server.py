@@ -1,8 +1,9 @@
-import typer
 import os
-from configobj import ConfigObj
 import subprocess
+
+import typer
 from bullet import Bullet
+from configobj import ConfigObj
 
 app = typer.Typer()
 typer.echo("server - Mounting of RLI folders\n")

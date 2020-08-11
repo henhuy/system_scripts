@@ -1,8 +1,9 @@
 
 import os
 from pprint import pprint
-import typer
+
 import sqlalchemy
+import typer
 from bullet import Bullet, Input
 from configobj import ConfigObj
 from sqlalchemy.sql import text
