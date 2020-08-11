@@ -1,19 +1,22 @@
 [tool.poetry]
-name = "remote"
-version = "0.1.0"
-description = "Easily enter known remote PCs (via rdesktop)"
+name = "system scripts"
+version = "0.2.0"
+description = "Quick system scripts"
 authors = ["hendrik.huyskens"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 bullet = "^2.1.0"
 typer = "^0.3.1"
+configobj = "^5.0.6"
+sqlalchemy = "^1.3.18"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 
 [tool.poetry.scripts]
-pyremote = "remote.remote:main"
+remote = "system_scripts.remote:main"
+redmine = "system_scripts.redmine:main"
 
 [build-system]
 requires = ["poetry>=0.12"]
