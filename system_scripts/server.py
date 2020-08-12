@@ -16,7 +16,7 @@ bullet_style = {
 
 USERS = ["hendrik.huyskens", "admin"]
 TARGETS = {
-    "//192.168.10.14/rl-institut": "/home/local/RL-INSTITUT/hendrik.huyskens/rl-institut"
+    "//192.168.10.221/rl-institut": "/home/local/RL-INSTITUT/hendrik.huyskens/rl-institut"
 }
 
 
