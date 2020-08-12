@@ -20,7 +20,7 @@ tunnels = config["FSSH"]["TUNNEL"]
 
 
 @app.command()
-def fssh():
+def fssh(forward_ssh_key: bool = typer.Option(False, "-f")):
     cli = Bullet(prompt='Choose option:', choices=['ssh', 'tunnel'], **bullet_style)
     option = cli.launch()
     if option == 'ssh':
@@ -38,11 +38,19 @@ def fssh():
     route = lookup[chosen].as_list("route")
 
     if option == 'ssh':
-        call = ['ssh'] + route
+        call = ['ssh']
     else:
-        call = ['ssh', '-fNL'] + route
+        call = ['ssh', '-fNL']
+    if forward_ssh_key:
+        typer.echo("SSH-Key forwarding activated.")
+        call += ["-A"]
+    call += route
     subprocess.call(call)
 
 
 def main():
     app()
+
+
+if __name__ == "__main__":
+    main()
