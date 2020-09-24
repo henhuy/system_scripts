@@ -42,15 +42,13 @@ def remote(name: str = typer.Argument(None), laptop: bool = typer.Option(False, 
     address = ADDRESSES[name]
 
     call = [
-        "rdesktop",
-        address.ip,
-        "-u",
-        address.user,
-        "-g",
-        resolution,
+        "xfreerdp",
+        f"/v:{address.ip}",
+        f"/u:{address.user}",
+        f"/size:{resolution}",
     ]
     if address.domain:
-        call += ["-d", address.domain]
+        call += [f"/d:{address.domain}"]
     subprocess.call(call)
 
 
