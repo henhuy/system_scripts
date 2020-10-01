@@ -1,56 +1,58 @@
 
+import os
 import subprocess
-from dataclasses import dataclass
-from typing import Dict, Optional
 
 import typer
 from bullet import Bullet
+from configobj import ConfigObj
 
-LAPTOP_RESOLUTION = "1200x800"
-DESKTOP_RESOLUTION = "1800x1000"
+LAPTOP_RESOLUTION = '1200x800'
+DESKTOP_RESOLUTION = '1800x1000'
+
+config = ConfigObj(os.environ['PYTHON_SYSTEM_SCRIPT_CONFIG'], stringify=False)
+bullet_style = {
+    k: config['BULLET'].as_int(
+        k,
+    ) if k != 'bullet' else config['BULLET']['bullet']
+    for k in config['BULLET'].keys()
+}
 
 app = typer.Typer()
-typer.echo("remote - Simple tool to connect to remote devices\n")
+typer.echo('remote - Simple tool to connect to remote devices\n')
 
 
-@dataclass
-class RemoteAddress:
-    ip: str
-    user: str = "hendrik.huyskens"
-    domain: Optional[str] = "rl-institut"
-
-
-ADDRESSES: Dict[str, RemoteAddress] = {
-    "DC1": RemoteAddress("192.168.10.200", "admin"),
-    "SRVEX": RemoteAddress("192.168.10.8", "admin"),
-}
+remotes = config["REMOTE"]
 
 
 @app.command()
-def remote(name: str = typer.Argument(None), laptop: bool = typer.Option(False, "-l")):
+def remote(name: str = typer.Argument(None), laptop: bool = typer.Option(False, '-l')):
     if not name:
-        cli = Bullet(prompt="Choose option:", choices=list(ADDRESSES.keys()))
+        cli = Bullet(prompt='Choose option:', choices=list(remotes.keys()), **bullet_style)
         name = cli.launch()
     typer.echo(f"Starting remote connection to '{name}'")
 
     if laptop:
         resolution = LAPTOP_RESOLUTION
-        typer.echo("Using laptop resolution")
+        typer.echo('Using laptop resolution')
     else:
         resolution = DESKTOP_RESOLUTION
 
-    address = ADDRESSES[name]
+    address = remotes[name]
 
     call = [
-        "xfreerdp",
-        f"/v:{address.ip}",
-        f"/u:{address.user}",
-        f"/size:{resolution}",
+        'xfreerdp',
+        f'/v:{address["host"]}',
+        f'/u:{address["user"]}',
+        f'/size:{resolution}',
     ]
-    if address.domain:
-        call += [f"/d:{address.domain}"]
+    if "domain" in address:
+        call += [f'/d:{address["domain"]}']
     subprocess.call(call)
 
 
 def main():
     app()
+
+
+if __name__ == "__main__":
+    main()
