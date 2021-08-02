@@ -9,6 +9,8 @@ from configobj import ConfigObj
 LAPTOP_RESOLUTION = '1200x800'
 DESKTOP_RESOLUTION = '1800x1000'
 
+DEFAULT_USER = 'admin'
+
 config = ConfigObj(os.environ['PYTHON_SYSTEM_SCRIPT_CONFIG'], stringify=False)
 bullet_style = {
     k: config['BULLET'].as_int(
@@ -37,16 +39,26 @@ def remote(name: str = typer.Argument(None), laptop: bool = typer.Option(False, 
     else:
         resolution = DESKTOP_RESOLUTION
 
-    address = remotes[name]
+    try:
+        address = remotes[name]
+    except KeyError:
+        typer.echo(f"Address '{name}' not found in remote addresses. Trying to use '{name}' as host address...")
+        host = name
+        user = DEFAULT_USER
+        domain = None
+    else:
+        host = address['host']
+        user = address['user']
+        domain = address.get("domain")
 
     call = [
         'xfreerdp',
-        f'/v:{address["host"]}',
-        f'/u:{address["user"]}',
+        f'/v:{host}',
+        f'/u:{user}',
         f'/size:{resolution}',
     ]
-    if "domain" in address:
-        call += [f'/d:{address["domain"]}']
+    if domain:
+        call += [f'/d:{domain}']
     subprocess.call(call)
 
 
