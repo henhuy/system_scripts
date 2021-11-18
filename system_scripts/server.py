@@ -15,16 +15,15 @@ bullet_style = {
 }
 
 USERS = ["hendrik.huyskens", "admin"]
-TARGETS = {
-    "//192.168.10.221/rl-institut": "/home/local/RL-INSTITUT/hendrik.huyskens/rl-institut"
-}
+TARGETS = config["SERVER"]
 
 
 @app.command()
 def server():
     cli = Bullet(prompt="Select target", choices=list(TARGETS.keys()), **bullet_style)
-    source = cli.launch()
-    destination = TARGETS[source]
+    target = cli.launch()
+    source = TARGETS[target]["source"]
+    destination = TARGETS[target]["destination"]
 
     if os.path.ismount(destination):
         cli = Bullet(
