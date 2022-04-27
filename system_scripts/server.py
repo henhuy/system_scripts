@@ -46,6 +46,7 @@ def server():
         source,
         destination,
     ]
+    typer.echo(f"Running: {' '.join(cmd)}")
     subprocess.call(cmd)
 
 

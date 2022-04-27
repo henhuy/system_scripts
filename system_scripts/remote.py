@@ -59,6 +59,7 @@ def remote(name: str = typer.Argument(None), laptop: bool = typer.Option(False, 
     ]
     if domain:
         call += [f'/d:{domain}']
+    typer.echo(f"Running: {' '.join(call)}")
     subprocess.call(call)
 
 

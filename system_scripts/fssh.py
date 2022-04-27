@@ -45,6 +45,7 @@ def fssh(forward_ssh_key: bool = typer.Option(False, "-f")):
         typer.echo("SSH-Key forwarding activated.")
         call += ["-A"]
     call += route
+    typer.echo(f"Running: {' '.join(call)}")
     subprocess.call(call)
 
 
