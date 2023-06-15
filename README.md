@@ -1,6 +1,20 @@
 
 Daily bash scripts implemented in python
 
+# Getting started
+
+In order to run system scripts you can install them easily via pipx.
+```bash
+pipx install .
+```
+System scripts are looking for a config file. Therefore, the env variable `PYTHON_SYSTEM_SCRIPT_CONFIG` must be set.
+The easiest way to permanently add it to the system, is by adding it to the `.profile` file in your home directory:
+```bash
+export PYTHON_SYSTEM_SCRIPT_CONFIG=<path to config file>
+```
+
+Following commands are available:
+
 fssh - Connects to config-defined servers via ssh (or creates defined tunnels)
 remote - Connects to remote servers (defined in config) via xfreerdp
 server - Mounts/unmounts servers (config file) via mount.cifs
