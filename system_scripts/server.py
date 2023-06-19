@@ -42,7 +42,7 @@ def server():
         "sudo",
         "mount.cifs",
         "-o",
-        f"user={user},dom=rl-institut,uid=RL-INSTITUT\\hendrik.huyskens",
+        f"user={user},dom=rl-institut,uid={config['USER']['uid']}",
         source,
         destination,
     ]
